@@ -7,6 +7,8 @@ const fs = require("fs");
 const render = require("./lib/htmlRenderer");
 const renderEngineer = require("./lib/htmlRenderer");
 
+const outputPath = path.resolve(__dirname, "lib", "team.html");
+
 const staff = [];
 
 const getRole = () => {
@@ -116,8 +118,11 @@ const closeOut = () => {
       if (ans.next === true) {
         getRole();
       } else {
-        render(staff);
-        console.log(staff);
+        var html = render(staff);
+        console.log(staff)
+        fs.writeFile(outputPath, html, err => {
+            if (err) throw err
+        })
       }
     });
 };

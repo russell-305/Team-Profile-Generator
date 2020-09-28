@@ -72,10 +72,10 @@ const renderIntern = (intern) => {
     path.resolve(templatesDir, "intern.html"),
     "utf8"
   );
-  template = replacePlaceholders(template, "name", intern.getName());
+  //template = replacePlaceholders(template, "name", intern.getName());
   template = replacePlaceholders(template, "role", intern.getRole());
-  template = replacePlaceholders(template, "email", intern.getEmail());
-  template = replacePlaceholders(template, "id", intern.getId());
+  //template = replacePlaceholders(template, "email", intern.getEmail());
+  //template = replacePlaceholders(template, "id", intern.getId());
   template = replacePlaceholders(template, "school", intern.getSchool());
   return fs.writeFile(`${intern.name}.html`, template, function (err) {
     if (err) {
@@ -87,11 +87,20 @@ const renderIntern = (intern) => {
 };
 
 const renderMain = (html) => {
-  const template = fs.readFileSync(
+  let template = fs.readFileSync(
     path.resolve(templatesDir, "main.html"),
     "utf8"
   );
-  return replacePlaceholders(template, "team", html);
+  
+  template = replacePlaceholders(template, "team", html);
+  return fs.writeFile(`main.html`, template, function (err) {
+    if (err) {
+      return console.log(err);
+    }
+
+    console.log("Success!");
+  });
+
 };
 
 const replacePlaceholders = (template, placeholder, value) => {
